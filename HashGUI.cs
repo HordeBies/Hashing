@@ -88,7 +88,7 @@ namespace Hashing
             label6.Text = "Loading Factor: " + "0/"+hash.LoadingFactor.ToString();
             dataGridView1.Refresh();
             dataGridView1.ClearSelection();
-
+            ReSizeTable();
         }
 
         private void FillTable()
@@ -121,13 +121,13 @@ namespace Hashing
                 }
                 i++;
             }
-            ReSizeTable();
             label7.Text = "Bucket Depth: " + hash.CurrentBucketDepth.ToString() + "/" + hash.BucketDepthLimit.ToString();
             dataGridView1.ClearSelection();
         }
 
         private void ReSizeTable()
         {
+            /* //this part dynamically sizes the table depending on boundaries but costs so many resources therefore not active yet.
             int width = 0;
             foreach (DataGridViewColumn col in dataGridView1.Columns)
             {
@@ -145,6 +145,9 @@ namespace Hashing
                 dataGridView1.Width = this.Width - 40;
             else
                 dataGridView1.Width = width + 3 + 25;
+            */
+            dataGridView1.Width = this.Width - 40;
+            dataGridView1.Height = this.Height - 40 - dataGridView1.Location.Y;
         }
 
         private void Form1_Load(object sender, EventArgs e)
