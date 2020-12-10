@@ -186,11 +186,9 @@ namespace Hashing
         {
             int lastPrime = hash.m;
             int newPrime = Hash.getNextKey(lastPrime);
-            //double newLoadingFactor = hash.LoadingFactor + 1/Math.Log(newPrime); 
-            //int newBucketDepthLimit = (int)Math.Truncate(hash.BucketDepthLimit + Math.Log(newPrime)/2);
-            double newLoadingFactor = hash.LoadingFactor + 1 / (Math.Log(newPrime)*2);
-            int newBucketDepthLimit= (int)Math.Truncate(hash.BucketDepthLimit + Math.Log(newPrime) / 2);
-            Hash newHash = new Hash(newPrime, newLoadingFactor, newBucketDepthLimit);
+            //double newLoadingFactor = hash.LoadingFactor + 1 / (Math.Log(newPrime)*2);
+            //int newBucketDepthLimit= (int)Math.Truncate(hash.BucketDepthLimit + Math.Log(newPrime) / 2);
+            Hash newHash = new Hash(newPrime, hash.LoadingFactor, hash.BucketDepthLimit);
             foreach (LinkedList<HashValue> h in hash.HashTable)
             {
                 foreach (HashValue v in h)
