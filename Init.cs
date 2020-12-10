@@ -8,7 +8,7 @@ namespace Hashing
         public Init()
         {
             InitializeComponent();
-
+            linkLabel1.Links.Add(0,50, "https://github.com/HordeBies/Hashing");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -41,6 +41,12 @@ namespace Hashing
             textBox1.Text = "2";
             textBox2.Text = "1";
             textBox3.Text = "5";
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabel1.LinkVisited = true;
+            System.Diagnostics.Process.Start("https://github.com/HordeBies/Hashing");
         }
     }
 }
