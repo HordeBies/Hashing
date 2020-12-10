@@ -45,6 +45,7 @@ namespace Hashing
             this.hashValueBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.hashBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.hashBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hashValueBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hashBindingSource)).BeginInit();
@@ -62,7 +63,6 @@ namespace Hashing
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(734, 411);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // textBox1
             // 
@@ -80,7 +80,6 @@ namespace Hashing
             this.label1.Size = new System.Drawing.Size(79, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Value To Insert";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
             // 
@@ -101,7 +100,6 @@ namespace Hashing
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "Hash Key";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // textBox2
             // 
@@ -178,11 +176,21 @@ namespace Hashing
             // 
             this.hashBindingSource1.DataSource = typeof(Hashing.Hash);
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(15, 83);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(143, 13);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "Only integer values permitted";
+            // 
             // HashGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(459, 329);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -199,7 +207,6 @@ namespace Hashing
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Hash Table";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HashGUI_FormClosing);
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.HashGUI_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hashValueBindingSource)).EndInit();
@@ -226,6 +233,7 @@ namespace Hashing
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
     }
 }
 

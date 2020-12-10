@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Hashing
@@ -15,11 +11,11 @@ namespace Hashing
         private Hash hash;
         private DataTable DTable = new DataTable();
         private int l;
-        public HashGUI(int initKey,double initLoadingFactor, int initialBucketDepthLimit)
+        public HashGUI(int initKey, double initLoadingFactor, int initialBucketDepthLimit)
         {
             l = initKey;
             InitializeComponent();
-            
+
             /*
             var child = new Form();
             child.TopLevel = true;
@@ -34,7 +30,7 @@ namespace Hashing
             child.Visible = true;
             child.updateHashTable(20);
             this.Controls.Add(child);*/
-            hash = new Hash(l,initLoadingFactor,initialBucketDepthLimit);
+            hash = new Hash(initKey, initLoadingFactor, initialBucketDepthLimit);
 
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.ReadOnly = false;
@@ -66,26 +62,17 @@ namespace Hashing
                 DTable.Rows.Add(r);
             }*/
 
-            int width = 0;
-
             dataGridView1.DataSource = DTable;
             foreach (DataGridViewColumn col in dataGridView1.Columns)
             {
                 col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
                 col.ReadOnly = true;
-                width += col.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true);
             }
-            if(dataGridView1.Width+24 > this.Width)
-                dataGridView1.Width = this.Width-24;
-            else
-                dataGridView1.Width = width+3+25;
-            
-            
-            dataGridView1.Refresh();
+
             FillTable();
-            label2.Text = "Current Hash Key: " +l.ToString();
-            label6.Text = "Loading Factor: " + "0/"+hash.LoadingFactor.ToString();
+            label2.Text = "Current Hash Key: " + l.ToString();
+            label6.Text = "Loading Factor: " + "0/" + hash.LoadingFactor.ToString();
             dataGridView1.Refresh();
             dataGridView1.ClearSelection();
             ReSizeTable();
@@ -96,32 +83,33 @@ namespace Hashing
             int i = 0;
             foreach (LinkedList<HashValue> hashIndex in hash.HashTable)
             {
-                if(hashIndex.Count > 0)
+                if (hashIndex.Count > 0)
                 {
                     int j = 0;
                     foreach (HashValue hasVal in hashIndex)
                     {
-                        while(DTable.Rows.Count < j+1)
+                        while (DTable.Rows.Count < j + 1)
                         {
                             DataRow r = DTable.NewRow();
                             DTable.Rows.Add(r);
-                            
+
                         }
                         if (hasVal.Occurrence > 1)
                         {
-                            DTable.Rows[j][i] = hasVal.Value.ToString()+"("+hasVal.Occurrence.ToString()+")";
+                            DTable.Rows[j][i] = hasVal.ToString() + "(" + hasVal.Occurrence.ToString() + ")";
                         }
                         else
                         {
-                            DTable.Rows[j][i] = hasVal.Value;
+                            DTable.Rows[j][i] = hasVal.ToString();
                         }
-                        
+
                         j++;
                     }
                 }
                 i++;
             }
             label7.Text = "Bucket Depth: " + hash.CurrentBucketDepth.ToString() + "/" + hash.BucketDepthLimit.ToString();
+            label6.Text = "Current Loading Factor: " + (Math.Truncate(((double)hash.DataLength / hash.KeyLength) * 100) / 100).ToString();
             dataGridView1.ClearSelection();
         }
 
@@ -150,31 +138,6 @@ namespace Hashing
             dataGridView1.Height = this.Height - 40 - dataGridView1.Location.Y;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private int getPrevPrime(int currPrime)
-        {
-            int prevPrime = currPrime;
-            bool isPrime;
-            do
-            {
-                prevPrime--;
-                isPrime = true;
-                for (int i = 2; i < prevPrime; i++)
-                {
-                    if (prevPrime % i == 0)
-                    {
-                        isPrime = false;
-                        break;
-                    }
-                }
-            } while (!isPrime && prevPrime >2);
-
-            return prevPrime;
-        }
         private void reHash()
         {
             int lastPrime = l;
@@ -182,7 +145,7 @@ namespace Hashing
             l = hash.KeyLength;
             label2.Text = "Current Hash Key: " + l.ToString();
 
-            for (int lp= lastPrime; lp < l; lp++)
+            for (int lp = lastPrime; lp < l; lp++)
             {
                 DataColumn col = new DataColumn();
                 col.ColumnName = lp.ToString();
@@ -196,22 +159,20 @@ namespace Hashing
         private void AddHash(int val)
         {
             hash.Add(val, 1);
-            while ((double)hash.DataLength/hash.KeyLength >= hash.LoadingFactor || hash.CurrentBucketDepth > hash.BucketDepthLimit)
+            while ((double)hash.DataLength / hash.KeyLength >= hash.LoadingFactor || hash.CurrentBucketDepth > hash.BucketDepthLimit)
             {
                 DTable.Clear();
                 reHash();
             }
-            
-            FillTable();
-            label6.Text = "Current Loading Factor: " + (Math.Truncate(((double)hash.DataLength / hash.KeyLength)*100)/100).ToString();
-        }
 
+            FillTable();
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             string txt = textBox1.Text;
             textBox1.Clear();
             int val = 0;
-            if (int.TryParse(txt,out val))
+            if (int.TryParse(txt, out val))
             {
                 AddHash(val);
             }
@@ -221,14 +182,14 @@ namespace Hashing
         {
             Program.init.Location = this.Location;
             Program.init.Show();
-            
+
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if(e.KeyChar == (char)13)
+            if (e.KeyChar == (char)13)
             {
-                e.Handled= true;
+                e.Handled = true;
                 string txt = textBox1.Text;
                 textBox1.Clear();
                 int val = 0;
@@ -242,19 +203,9 @@ namespace Hashing
         private void HashGUI_Resize(object sender, EventArgs e)
         {
             Control control = (Control)sender;
-            this.Height= control.Size.Height;
-            this.Width= control.Size.Width;
+            this.Height = control.Size.Height;
+            this.Width = control.Size.Width;
             ReSizeTable();
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void RemoveHash(int val)
@@ -289,11 +240,6 @@ namespace Hashing
                 }
             }
         }
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            dataGridView1.ClearSelection();
-        }
     }
-    
+
 }

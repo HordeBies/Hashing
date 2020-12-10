@@ -129,8 +129,6 @@ namespace Hashing
             this.Name = "Init";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HashTable Creating Menu";
-            this.Load += new System.EventHandler(this.Init_Load);
-            this.LocationChanged += new System.EventHandler(this.Init_LocationChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
 

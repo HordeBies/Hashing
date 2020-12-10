@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Hashing
@@ -15,11 +8,6 @@ namespace Hashing
         public Init()
         {
             InitializeComponent();
-
-        }
-
-        private void Init_Load(object sender, EventArgs e)
-        {
 
         }
 
@@ -35,21 +23,17 @@ namespace Hashing
             if (!int.TryParse(txt, out ikey))
                 ikey = 2;
 
-            if(!double.TryParse(txt2,out ilf))
+            if (!double.TryParse(txt2, out ilf))
                 ilf = 1;
-            
+
             if (!int.TryParse(txt3, out ibdl))
                 ibdl = 5;
 
-            HashGUI gui = new HashGUI(ikey,ilf,ibdl);
+            HashGUI gui = new HashGUI(ikey, ilf, ibdl);
             gui.Location = this.Location;
             gui.Show();
             this.Hide();
-            
-        }
 
-        private void Init_LocationChanged(object sender, EventArgs e)
-        {
         }
 
         private void button2_Click(object sender, EventArgs e)

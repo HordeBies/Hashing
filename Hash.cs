@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System;
 
 namespace Hashing
 {
@@ -14,7 +11,7 @@ namespace Hashing
         private int bDepth; //currently the deepest bucket's size
         private int bDLimit; // bucket depth limit
         public LinkedList<HashValue>[] HashTable;
-        public Hash(int size,double loadingFactor,int bucketDepthLimit)
+        public Hash(int size, double loadingFactor, int bucketDepthLimit)
         {
             this.m = size;
             this.n = 0;
@@ -74,7 +71,7 @@ namespace Hashing
         {
             int currDepth;
             int maxDepth = 0;
-            for(int i = 0; i < this.KeyLength; i++)
+            for (int i = 0; i < this.KeyLength; i++)
             {
                 currDepth = this.HashTable[i].Count;
                 if (currDepth > maxDepth)
@@ -86,19 +83,19 @@ namespace Hashing
         {
             int hashKey = value % this.m;
             LinkedListNode<HashValue> node = this.HashTable[hashKey].First;
-            if(node == null)
+            if (node == null)
             {
                 return;
             }
-            else if(value < node.Value.Value)
+            else if (value < node.Value.Value)
             {
                 return;
             }
             else
             {
-                while(value > node.Value.Value)
+                while (value > node.Value.Value)
                 {
-                    if(node.Next != null)
+                    if (node.Next != null)
                     {
                         node = node.Next;
                     }
@@ -107,7 +104,7 @@ namespace Hashing
                         return;
                     }
                 }
-                if(value == node.Value.Value)
+                if (value == node.Value.Value)
                 {
                     node.Value.Occurrence--;
                     if (node.Value.Occurrence == 0)
@@ -123,26 +120,26 @@ namespace Hashing
                 }
             }
         }
-        public void Add(int value,int occ)
+        public void Add(int value, int occ)
         {
             this.DataLength++;
-            int hashKey = value % this.m;
+            int hashKey = Math.Abs(value) % this.m;
             HashValue hashVal = new HashValue(value, m);
             hashVal.Occurrence += occ;
             LinkedListNode<HashValue> node = this.HashTable[hashKey].First;
-            if(node == null)
+            if (node == null)
             {
                 this.HashTable[hashKey].AddLast(hashVal);
             }
-            else if(value < node.Value.Value)
+            else if (value < node.Value.Value)
             {
                 this.HashTable[hashKey].AddFirst(hashVal);
             }
             else
             {
-                while(value > node.Value.Value)
+                while (value > node.Value.Value)
                 {
-                    if(node.Next != null)
+                    if (node.Next != null)
                     {
                         node = node.Next;
                     }
@@ -153,7 +150,7 @@ namespace Hashing
                         return;
                     }
                 }
-                if(value == node.Value.Value)
+                if (value == node.Value.Value)
                 {
                     node.Value.Occurrence++; //adding same value doesnt increase linked list length and data length of hashTable so complexity stays same
                     this.n--;
@@ -165,6 +162,7 @@ namespace Hashing
             }
             this.countBucketDepth();
         }
+
         private static int getNextKey(int lastKey)
         {
             bool isPrime;
@@ -187,12 +185,12 @@ namespace Hashing
         {
             int lastPrime = hash.m;
             int newPrime = Hash.getNextKey(lastPrime);
-            Hash newHash = new Hash(newPrime,hash.LoadingFactor,hash.BucketDepthLimit);
+            Hash newHash = new Hash(newPrime, hash.LoadingFactor, hash.BucketDepthLimit);
             foreach (LinkedList<HashValue> h in hash.HashTable)
             {
                 foreach (HashValue v in h)
                 {
-                    newHash.Add(v.Value,v.Occurrence);
+                    newHash.Add(v.Value, v.Occurrence);
                 }
             }
             newHash.countBucketDepth();
@@ -202,7 +200,6 @@ namespace Hashing
     public class HashValue
     {
         private int intVal;  //unhashed value
-        private string strVal;
         private int key; //hashed value
         private int occ; //occurrence
         public HashValue(int value, int key)
