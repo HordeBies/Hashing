@@ -109,7 +109,7 @@ namespace Hashing
                 i++;
             }
             label7.Text = "Bucket Depth: " + hash.CurrentBucketDepth.ToString() + "/" + hash.BucketDepthLimit.ToString();
-            label6.Text = "Current Loading Factor: " + (Math.Truncate(((double)hash.DataLength / hash.KeyLength) * 100) / 100).ToString();
+            label6.Text = "Current Loading Factor: " + (Math.Truncate(((double)hash.DataLength / hash.KeyLength) * 100) / 100).ToString()+"/"+(Math.Truncate(hash.LoadingFactor*100)/100).ToString();
             dataGridView1.ClearSelection();
         }
 
